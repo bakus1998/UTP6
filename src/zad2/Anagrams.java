@@ -7,6 +7,7 @@
 package zad2;
 
 
+import javax.swing.text.Document;
 import java.io.*;
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class Anagrams {
             FileInputStream fis = new FileInputStream(new File(path));
             BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
             String s_reader;
+
             while ((s_reader = reader.readLine())!=null){
                 readWord = s_reader.split("\\s");
                 for(int i=0;i<readWord.length;i++) {
@@ -49,7 +51,6 @@ public class Anagrams {
         allLists = new ArrayList<>();
         List<String> duplicate = new ArrayList<>();
         List<String> valToAdd;
-        //System.out.println(wordList);
 
         for (int i=0;i<wordList.size();i++) {
             if (duplicate.contains(wordList.get(i))==false) {
@@ -59,7 +60,6 @@ public class Anagrams {
                         duplicate.add(wordList.get(j));
                         valToAdd.add(wordList.get(j));
                     }
-                    //System.out.println(duplicate);
                 }
                 Collections.sort(valToAdd);
                 allLists.add(valToAdd);

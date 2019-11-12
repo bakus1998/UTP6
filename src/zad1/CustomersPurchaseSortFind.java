@@ -8,7 +8,9 @@ package zad1;
 
 
 import java.io.*;
+import java.text.Collator;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class CustomersPurchaseSortFind {
@@ -37,18 +39,23 @@ public class CustomersPurchaseSortFind {
         }catch (IOException e){
             e.printStackTrace();
         }
+
         toSearch=new ArrayList<>(customers);
     }
 
 
     public void showSortedBy(String option) {
+        Collator PL = Collator.getInstance(new Locale("pl", "PL"));
         if(option.equals("Nazwiska")){
             System.out.println("Nazwiska");
             name_comparator = Comparator.comparing(Customer::getName, (s1,s2) ->{
-                return s1.toLowerCase().compareTo(s2.toLowerCase());
+                return PL.compare(s1.toLowerCase(),s2.toLowerCase());
+
             }).thenComparing(Customer::getId, (s1,s2) ->{
                 return s1.compareTo(s2);
             });
+
+
             customers.sort(name_comparator);
             for(int i=0;i<customers.size();i++){
                 System.out.println(customers.get(i).toString());
@@ -61,8 +68,9 @@ public class CustomersPurchaseSortFind {
             prices_comparator = Comparator.comparing(Customer::getPrice, (s1,s2)->{
                return s2.compareTo(s1);
             }).thenComparing(Customer::getName, (s1,s2)->{
-                return s1.toLowerCase().compareTo(s2.toLowerCase());
+                return PL.compare(s1.toLowerCase(),s2.toLowerCase());
             });
+
             customers.sort(prices_comparator);
             for(int i=0;i<customers.size();i++){
                 System.out.println(customers.get(i).toString() +" "+customers.get(i).p.toString());
